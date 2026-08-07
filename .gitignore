@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IP Protection & Alpha Model (Withheld for publication)
+*model*.py
+*config*.yaml
+*config*.yml
+plan_implementation_gat.md
+
+# Data Files (Contains custom constructed signals and large raw datasets)
+*.csv
+*.parquet
+*.txt
+data/raw/
+data/processed/
+
+# IDE and System Files
+.vscode/
+.idea/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

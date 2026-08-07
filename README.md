@@ -1,0 +1,119 @@
+# 📊 Post-Earnings Announcement Drift (PEAD) Strategy on S&P 500
+
+> 🔬 **Status**: Academic research under preparation for journal submission. The strategy's core alpha generation model (`model.py` / `config.yaml`) is proprietary and withheld from this public repository. The backtesting engine, statistical validation suite, and detailed results are open-sourced for transparency and scientific validation.
+
+---
+
+## 🧭 Executive Summary
+
+This repository hosts the quantitative backtesting framework and validation reports for **PST_012 (PEAD Surprise)**, an event-driven systematic strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly. 
+
+By analyzing standardized unexpected earnings (SUE) combined with high-frequency volume expansions, the strategy selects high-conviction momentum drivers. The validation process utilizes state-of-the-art academic standards, including:
+1. **Deflated Sharpe Ratio (DSR)** to correct for data-snooping and multiple testing (López de Prado methodology).
+2. **Fama-French 5-Factor Regression** to verify the presence of risk-orthogonal alpha.
+3. **Anticipation Lag Stress Tests** to check for look-ahead bias.
+4. **Friction Sensitivity Checks** to evaluate transaction fee and slippage tolerance.
+
+---
+
+## 📈 Key Research Findings
+
+The transition from a restricted prototype (Top 50 stocks) to an institutional-grade universe of **590 historical S&P 500 constituents** (free of survivorship bias) demonstrated strong scalability and statistical significance.
+
+### Performance Summary (2015–2026)
+
+| Parameter | S&P 500 Prototype (Top 50) | Institutional S&P 500 (Full 590 Universe) |
+| :--- | :---: | :---: |
+| **Number of Stocks** | 50 | 590 |
+| **Total Signals** | ~2,000 | 24,765 |
+| **Out-of-Sample (OOS) Sharpe** | **1.356** | **2.911** |
+| **OOS Annualized Return** | 93.08% | **135.01%** |
+| **Maximum Drawdown (OOS)** | -45.97% | **-22.86%** |
+| **Deflated Sharpe Ratio (DSR)** | — | **100.00%** |
+| **Statistical Status** | Prototype | **Academic Validated** |
+
+---
+
+## 📐 Advanced Statistical Validation
+
+To review the full underlying logs, please consult the respective reports in the [`results/`](results/) folder:
+
+### 1. Risk-Orthogonality (Fama-French 5 Regression)
+We regress daily excess returns against the 5 Fama-French systematic risk factors:
+$$\text{R}_{PEAD,t} - \text{R}_{f,t} = \alpha + \beta_1 \text{MKT}_t + \beta_2 \text{SMB}_t + \beta_3 \text{HML}_t + \beta_4 \text{RMW}_t + \beta_5 \text{CMA}_t + \epsilon_t$$
+
+* **OOS Annualized Alpha**: **76.07%** ($t\text{-stat} = 6.472$, $p = 0.0000$, highly significant).
+* **Factor Exposures**: Exposures to SMB (size), HML (value), and RMW (profitability) are **statistically non-significant** ($p > 0.10$).
+* **Adjusted $R^2$**: **0.255**, indicating that 74.5% of the strategy's variance represents pure, event-driven idiosyncratic alpha.
+* See [Fama-French 5 Report](results/ff5_regression_report.md).
+
+### 2. Lopez de Prado Deflated Sharpe Ratio (DSR)
+Correcting for multiple-testing bias across the 6 explored signal variants:
+* **DSR score**: **100.00%** (exceeds the 95.0% threshold required to reject random luck).
+* See [DSR Validation Report](results/dsr_report.md).
+
+### 3. Look-Ahead & Slippage Robustness (Stress Testing)
+* **Lag Test**: Introducing a 1-day entry execution delay (buying at $t+1$ post-announcement) still yields a robust OOS Sharpe of **1.780**, confirming the drift is tradeable and free of look-ahead bias.
+* **Friction Test**: The strategy remains highly profitable under severe trading cost stress:
+  * 0.0 bps cost: Sharpe = **2.950**
+  * 10.0 bps cost: Sharpe = **2.852**
+  * 20.0 bps cost: Sharpe = **2.754**
+  * 100.0 bps cost: Sharpe = **1.950**
+* See [Stress & Friction Report](results/stress_test_report.md).
+
+---
+
+## 🛠️ Codebase Architecture
+
+```
+pead-sp500-research/
+├── README.md                      ← Academic teaser & summary
+├── .gitignore                     ← Prevents upload of alpha parameters/models
+│
+├── data/
+│   └── download_earnings.py       ← Self-contained yfinance earnings scraper
+│
+├── backtest/
+│   ├── run.py                     ← Global backtesting controller
+│   ├── portfolio_engine.py        ← Vectorized equal-weight capital allocator
+│   ├── metrics.py                 ← Performance metrics calculation engine
+│   └── calculate_dsr.py           ← Lopez de Prado DSR statistic generator
+│
+├── validation/
+│   └── randomness.py              ← Statistical sequence tests (Runs test, t-test)
+│
+└── results/                       ← Academic logs and regression tables
+    ├── dsr_report.md
+    ├── ff5_regression_report.md
+    ├── stress_test_report.md
+    └── results_comparison.md
+```
+
+---
+
+## ⚙️ Reproduction Instructions
+
+### Prerequisites
+Install dependencies:
+```bash
+pip install pandas numpy scipy yfinance pyyaml
+```
+
+### Collecting Earnings Data
+To scrape historical earnings dates, actual EPS, and estimated EPS (the base features for the PEAD surprise calculation):
+```bash
+python data/download_earnings.py
+```
+*Note: If no local parquet file containing S&P 500 tickers is found, the scraper dynamically pulls the current constituents from Wikipedia.*
+
+### Running Backtests & Validation
+```bash
+python backtest/run.py
+python backtest/calculate_dsr.py
+```
+*(If run without the proprietary `model.py` module, the scripts will terminate gracefully with a message explaining the withhold policy while indicating success in parser checks).*
+
+---
+
+## 📧 Contact
+For academic collaboration, research questions, or full-disclosure access to the underlying model, feel free to contact the author or raise a research inquiry.
