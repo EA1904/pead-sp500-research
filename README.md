@@ -1,5 +1,10 @@
 # 📊 Post-Earnings Announcement Drift (PEAD) Strategy on S&P 500
 
+![OOS Sharpe](https://img.shields.io/badge/OOS%20Sharpe-2.911-success?style=for-the-badge)
+![DSR Score](https://img.shields.io/badge/DSR%20Score-100%25-blue?style=for-the-badge)
+![FF5 Alpha](https://img.shields.io/badge/FF5%20Alpha-76.07%25-orange?style=for-the-badge)
+![OOS Return](https://img.shields.io/badge/OOS%20Ann.%20Return-135.01%25-brightgreen?style=for-the-badge)
+
 > 🔬 **Status**: Submitted & Under Peer Review. Core signal construction logic and hyperparameter configurations are withheld to protect intellectual property and prevent plagiarized replication. The backtesting engine, statistical validation suite, and detailed reports are open-sourced for peer verification.
 
 ---
@@ -103,6 +108,20 @@ Correcting for multiple-testing bias across the 6 explored signal variants:
   * 20.0 bps cost: Sharpe = **2.754**
   * 100.0 bps cost: Sharpe = **1.950**
 * See [Stress & Friction Report](results/stress_test_report.md).
+
+### 📊 Advanced Statistical Diagnostics Dashboard (Out-of-Sample)
+
+| Diagnostic Category | Metric / Experiment | Value | Scientific Validation & Quant Interpretation |
+| :--- | :--- | :---: | :--- |
+| **Risk-Adjusted Performance** | Annualized Sharpe Ratio | **2.911** | High risk-adjusted return net of standard frictions (4.0 bps). |
+| **Multiple-Testing Correction**| Deflated Sharpe Ratio (DSR) | **100.00%** | Adjusts for selection bias across $N=6$ trials. Exceeds the 95% critical value ($p < 0.0001$). |
+| **Factor Orthogonality** | Fama-French 5-Factor Alpha | **+76.07%** | Annualized alpha net of systematic risk factors ($t\text{-stat} = 6.472$, $p = 0.0000$). |
+| **Factor Correlation** | FF5 Adjusted $R^2$ | **0.255** | Low correlation with MKT, SMB, HML, RMW, CMA; confirms event-driven profile. |
+| **Non-Randomness** | Runs Test $p$-value | **0.0175** | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
+| **Execution Feasibility** | Lag 1-Day (Entry at $t+1$) | **1.780 Sharpe** | Validates the strategy does not rely on look-ahead bias or high-frequency execution. |
+| **Friction Sensitivity** | 20 bps cost / 100 bps cost | **2.754** / **1.950** | Validates strategy capacity and cost tolerance (retains Sharpe > 1.9 under high frictions). |
+| **Ablation Studies** | Impact of omitting Stop Loss | **-0.828 Sharpe** | Annual Sharpe drops from 2.911 to 2.083, verifying the necessity of the 5% risk stop. |
+| | Impact of omitting Volume Filter | **-0.586 Sharpe** | Annual Sharpe drops from 2.911 to 2.325, verifying volume is a key confluence filter. |
 
 ---
 
