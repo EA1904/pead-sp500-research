@@ -4,6 +4,12 @@
 
 ---
 
+## 📈 Out-of-Sample Performance (2021–2026)
+
+![PEAD Strategy Performance](assets/pead_performance.png)
+
+---
+
 ## 🧭 Executive Summary
 
 This repository hosts the quantitative backtesting framework and validation reports for **PST_012 (PEAD Surprise)**, an event-driven systematic strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly. 
