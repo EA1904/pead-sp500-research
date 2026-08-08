@@ -22,3 +22,6 @@ data/processed/
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
+
+# Whitelist files
+!requirements.txt
