@@ -113,15 +113,15 @@ Correcting for multiple-testing bias across the 6 explored signal variants:
 
 | Diagnostic Category | Metric / Experiment | Value | Scientific Validation & Quant Interpretation |
 | :--- | :--- | :---: | :--- |
-| **Risk-Adjusted Performance** | Annualized Sharpe Ratio | **2.911** | High risk-adjusted return net of standard frictions (4.0 bps). |
-| **Multiple-Testing Correction**| Deflated Sharpe Ratio (DSR) | **100.00%** | Adjusts for selection bias across $N=6$ trials. Exceeds the 95% critical value ($p < 0.0001$). |
-| **Factor Orthogonality** | Fama-French 5-Factor Alpha | **+76.07%** | Annualized alpha net of systematic risk factors ($t\text{-stat} = 6.472$, $p = 0.0000$). |
-| **Factor Correlation** | FF5 Adjusted $R^2$ | **0.255** | Low correlation with MKT, SMB, HML, RMW, CMA; confirms event-driven profile. |
-| **Non-Randomness** | Runs Test $p$-value | **0.0175** | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
-| **Execution Feasibility** | Lag 1-Day (Entry at $t+1$) | **1.780 Sharpe** | Validates the strategy does not rely on look-ahead bias or high-frequency execution. |
-| **Friction Sensitivity** | 20 bps cost / 100 bps cost | **2.754** / **1.950** | Validates strategy capacity and cost tolerance (retains Sharpe > 1.9 under high frictions). |
-| **Ablation Studies** | Impact of omitting Stop Loss | **-0.828 Sharpe** | Annual Sharpe drops from 2.911 to 2.083, verifying the necessity of the 5% risk stop. |
-| | Impact of omitting Volume Filter | **-0.586 Sharpe** | Annual Sharpe drops from 2.911 to 2.325, verifying volume is a key confluence filter. |
+| **📈 Risk-Adjusted Performance** | Annualized Sharpe Ratio | ![](https://img.shields.io/badge/2.911-brightgreen?style=flat-square) | High risk-adjusted return net of standard frictions (4.0 bps). |
+| **🛡️ Multiple-Testing Correction**| Deflated Sharpe Ratio (DSR) | ![](https://img.shields.io/badge/100.00%25-blue?style=flat-square) | Adjusts for selection bias across $N=6$ trials. Exceeds the 95% critical value ($p < 0.0001$). |
+| **📐 Factor Orthogonality** | Fama-French 5-Factor Alpha | ![](https://img.shields.io/badge/%2B76.07%25-orange?style=flat-square) | Annualized alpha net of systematic risk factors ($t\text{-stat} = 6.472$, $p = 0.0000$). |
+| **📊 Factor Correlation** | FF5 Adjusted $R^2$ | ![](https://img.shields.io/badge/0.255-grey?style=flat-square) | Low correlation with MKT, SMB, HML, RMW, CMA; confirms event-driven profile. |
+| **🎲 Non-Randomness** | Runs Test $p$-value | ![](https://img.shields.io/badge/0.0175-success?style=flat-square) | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
+| **⏱️ Execution Feasibility** | Lag 1-Day (Entry at $t+1$) | ![](https://img.shields.io/badge/1.780-success?style=flat-square) | Validates the strategy does not rely on look-ahead bias or high-frequency execution. |
+| **💸 Friction Sensitivity** | 20 bps cost / 100 bps cost | ![](https://img.shields.io/badge/2.754%20%2F%201.950-blue?style=flat-square) | Validates strategy capacity and cost tolerance (retains Sharpe > 1.9 under high frictions). |
+| **✂️ Ablation Studies** | Impact of omitting Stop Loss | ![](https://img.shields.io/badge/--0.828-red?style=flat-square) | Annual Sharpe drops from 2.911 to 2.083, verifying the necessity of the 5% risk stop. |
+| | Impact of omitting Volume Filter | ![](https://img.shields.io/badge/--0.586-red?style=flat-square) | Annual Sharpe drops from 2.911 to 2.325, verifying volume is a key confluence filter. |
 
 ---
 
