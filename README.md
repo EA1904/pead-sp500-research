@@ -200,5 +200,26 @@ python backtest/calculate_dsr.py
 
 ---
 
-## 📧 Contact
-For academic collaboration, research questions, or full-disclosure access to the underlying model, feel free to contact the author or raise a research inquiry.
+## 📧 Contact & Academic Collaboration
+
+If you are an academic researcher, quantitative portfolio manager, or recruiter interested in event-driven anomalies, Graph Neural Networks (GNNs), or collaborating on finance research, feel free to reach out:
+
+<p align="center">
+  <a href="https://linkedin.com/in/YOUR_LINKEDIN_USERNAME" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/EA1904" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="mailto:YOUR_EMAIL@domain.com" target="_blank">
+    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://scholar.google.com/" target="_blank">
+    <img src="https://img.shields.io/badge/Google_Scholar-4285F4?style=for-the-badge&logo=google-scholar&logoColor=white" alt="Google Scholar" />
+  </a>
+</p>
+
+*Note: For full access to the proprietary `model.py` signal code or replication datasets under peer review, please send a formal request detailing your institutional affiliation via Email or LinkedIn.*
