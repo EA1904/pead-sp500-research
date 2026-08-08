@@ -58,6 +58,11 @@ Where factors capture: Market ($MKT$), Size ($SMB$), Value ($HML$), Profitabilit
 
 The transition from a restricted prototype (Top 50 stocks) to an institutional-grade universe of **590 historical S&P 500 constituents** (free of survivorship bias) demonstrated strong scalability and statistical significance.
 
+### Strategy Parameter & Variant Optimization
+Below is the Out-of-Sample (OOS) Sharpe Ratio comparison across the 6 backtested signal parameter variants, highlighting the selection of the optimal execution model (Variant 6):
+
+![PEAD Strategy Variant Comparison](assets/pead_variants_comparison.png)
+
 ### Performance Summary (2015–2026)
 
 | Parameter | S&P 500 Prototype (Top 50) | Institutional S&P 500 (Full 590 Universe) |
