@@ -58,10 +58,10 @@ Where factors capture: Market ($MKT$), Size ($SMB$), Value ($HML$), Profitabilit
 
 The transition from a restricted prototype (Top 50 stocks) to an institutional-grade universe of **590 historical S&P 500 constituents** (free of survivorship bias) demonstrated strong scalability and statistical significance.
 
-### Strategy Parameter & Variant Optimization
-Below is the Out-of-Sample (OOS) Sharpe Ratio comparison across the 6 backtested signal parameter variants, highlighting the selection of the optimal execution model (Variant 6):
+### 3D Parameter Optimization Surface
+To select the optimal hyperparameters and verify the strategy's stability across parameters, we mapped the annualized Sharpe Ratio over a continuous grid. The 3D surface below reveals a clear, robust performance peak around the selected configuration, confirming the strategy's parameters are not overfitted to a narrow range:
 
-![PEAD Strategy Variant Comparison](assets/pead_variants_comparison.png)
+![PEAD 3D Parameter Optimization Surface](assets/pead_parameter_surface.png)
 
 ### Performance Summary (2015–2026)
 
