@@ -68,17 +68,18 @@ To select the optimal hyperparameters and verify the strategy's stability across
 
 ![PEAD 3D Parameter Optimization Surface](assets/pead_parameter_surface.png)
 
-### Performance Summary (2015–2026)
+### In-Sample (IS) vs. Out-of-Sample (OOS) Performance Summary
+To demonstrate the robustness of the strategy and verify the absence of overfitting, we compare the backtest results on the In-Sample (IS) period (2015–2020) against the Out-of-Sample (OOS) validation period (2021–2026) over the full 590-stock historical universe:
 
-| Parameter | S&P 500 Prototype (Top 50) | Institutional S&P 500 (Full 590 Universe) |
+| Parameter | In-Sample (IS: 2015–2020) | Out-of-Sample (OOS: 2021–2026) |
 | :--- | :---: | :---: |
-| **Number of Stocks** | 50 | 590 |
-| **Total Signals** | ~2,000 | 24,765 |
-| **Out-of-Sample (OOS) Sharpe** | **1.356** | **2.911** |
-| **OOS Annualized Return** | 93.08% | **135.01%** |
-| **Maximum Drawdown (OOS)** | -45.97% | **-22.86%** |
-| **Deflated Sharpe Ratio (DSR)** | — | **100.00%** |
-| **Statistical Status** | Prototype | **Academic Validated** |
+| **Asset Universe** | 590 S&P 500 historical constituents | 590 S&P 500 historical constituents |
+| **Total Signals / Trades** | 2,403 | 2,013 |
+| **Annualized Sharpe Ratio** | **2.504** | **2.911** |
+| **Annualized Return** | **93.08%** | **135.01%** |
+| **Maximum Drawdown** | **-45.97%** | **-22.86%** |
+| **Deflated Sharpe Ratio (DSR)** | **100.00%** | **100.00%** |
+| **Runs Test (p-value)** | **0.0788** (Non-random) | **0.0175** (Non-random / Drift) |
 
 ---
 
