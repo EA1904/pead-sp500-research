@@ -101,11 +101,11 @@ def generate_plots():
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10), sharex=True, gridspec_kw={'height_ratios': [3, 1.2]})
 
     # 1. Courbe d'Equity (Échelle logarithmique pour la lisibilité)
-    ax1.plot(pead_equity.index, pead_equity.values, label=f"PST_012 PEAD (OOS Sharpe: {res_pead['metrics']['sharpe_ratio']:.3f})", color=color_pead, linewidth=2.5)
+    ax1.plot(pead_equity.index, pead_equity.values, label=f"PEAD-Surprise (OOS Sharpe: {res_pead['metrics']['sharpe_ratio']:.3f})", color=color_pead, linewidth=2.5)
     ax1.plot(bh_equity.index, bh_equity.values, label=f"S&P 500 Buy & Hold (OOS Sharpe: {res_bh['metrics']['sharpe_ratio']:.3f})", color=color_bh, linewidth=1.5, linestyle="--")
     
     ax1.set_yscale('log')
-    ax1.set_title("Performance Out-of-Sample (OOS) — 2021-2026\nPST_012 (PEAD Surprise) vs S&P 500 Index (Frais net: 4.0 bps / trade)", fontsize=14, fontweight='bold', pad=15)
+    ax1.set_title("Performance Out-of-Sample (OOS) — 2021-2026\nPEAD-Surprise Strategy vs S&P 500 Index (Frais net: 4.0 bps / trade)", fontsize=14, fontweight='bold', pad=15)
     ax1.set_ylabel("Capital Indexé (Base 100 - Échelle Log)", fontsize=12)
     ax1.legend(loc="upper left", fontsize=11, frameon=True)
     ax1.grid(True, which="both", ls="--", alpha=0.5)

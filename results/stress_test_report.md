@@ -1,4 +1,4 @@
-# 🔬 Rapport de Stress Test & Friction : PST_012 (S&P 500 Complet)
+# 🔬 Rapport de Stress Test & Friction : PEAD-Surprise (S&P 500 Complet)
 
 Ce rapport présente les tests de robustesse avancés appliqués à la Variante 6 (Holding 10 jours) de la stratégie PEAD afin de prouver l'absence de biais d'anticipation (Look-Ahead Bias) et d'évaluer la tolérance aux frictions de marché (slippage et commissions).
 

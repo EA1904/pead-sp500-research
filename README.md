@@ -17,7 +17,7 @@
 
 ## 🧭 Executive Summary
 
-This repository hosts the quantitative backtesting framework and validation reports for **PST_012 (PEAD Surprise)**, an event-driven systematic strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly. 
+This repository hosts the quantitative backtesting framework and validation reports for the **PEAD-Surprise** systematic trading strategy, an event-driven systematic strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly. 
 
 By analyzing standardized unexpected earnings (SUE) combined with high-frequency volume expansions, the strategy selects high-conviction momentum drivers. The validation process utilizes state-of-the-art academic standards, including:
 1. **Deflated Sharpe Ratio (DSR)** to correct for data-snooping and multiple testing (López de Prado methodology).

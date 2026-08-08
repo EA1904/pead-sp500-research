@@ -77,7 +77,7 @@ def main():
         sys.exit(0)
 
     print("=" * 60)
-    print("       ExploraQuant - DSR Calculator (PST_012 PEAD - S&P 500 Complet)")
+    print("       ExploraQuant - DSR Calculator (PEAD-Surprise - S&P 500 Complet)")
     print("=" * 60)
 
     local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -123,7 +123,7 @@ def main():
     dsr_metrics = calculate_dsr(best_sharpe, sharpes, best_returns)
 
     print("\n" + "-" * 50)
-    print("RÉSULTATS DU DEFLATED SHARPE RATIO (DSR) - PST_012 (S&P 500 Complet) :")
+    print("RÉSULTATS DU DEFLATED SHARPE RATIO (DSR) - PEAD-Surprise (S&P 500 Complet) :")
     print(f"  Nombre d'essais (N)         : {dsr_metrics['n_trials']}")
     print(f"  Sharpe Ann. du Meilleur     : {best_sharpe:.4f}")
     print(f"  Variance des Sharpes        : {dsr_metrics['sharpe_variance']:.6f}")
@@ -133,15 +133,15 @@ def main():
     print(f"  Statistique Z de Prado      : {dsr_metrics['z_statistic']:.4f}")
     print(f"  Deflated Sharpe Ratio (DSR) : {dsr_metrics['dsr']:.2%}")
     print("-" * 50)
-
+ 
     if dsr_metrics['dsr'] >= 0.95:
         print("SIGNIFICATIVITÉ : Le modèle franchit le seuil requis (DSR >= 95%).")
     else:
         print("WARNING : Risque élevé de surapprentissage (DSR < 95%).")
-
-    report_path = os.path.join(local_dir, "3_backtest", "dsr_report.md")
+ 
+    report_path = os.path.join(local_dir, "results", "dsr_report.md")
     with open(report_path, "w", encoding="utf-8") as f:
-        f.write("# Rapport de Deflated Sharpe Ratio (DSR) : PST_012 PEAD (S&P 500 Complet)\n\n")
+        f.write("# Rapport de Deflated Sharpe Ratio (DSR) : PEAD-Surprise (S&P 500 Complet)\n\n")
         f.write("Ce rapport applique la méthodologie de Marcos López de Prado pour corriger le biais de sélection multiple ")
         f.write("lié au test des 6 variantes de la stratégie PEAD sur l'univers S&P 500 Complet.\n\n")
         f.write("## Statistiques\n\n")

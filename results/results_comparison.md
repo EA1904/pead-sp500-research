@@ -1,6 +1,6 @@
-# Rapport de Backtest Comparatif : PST_012 PEAD Strategy (S&P 500 Complet)
+# Rapport de Backtest Comparatif : PEAD-Surprise Strategy (S&P 500 Complet)
 
-Ce rapport compare les performances de la stratégie Post-Earnings-Announcement Drift (PST_012) sur le portefeuille complet de l'univers S&P 500 (actions disponibles).
+Ce rapport compare les performances de la stratégie Post-Earnings-Announcement Drift (PEAD-Surprise) sur le portefeuille complet de l'univers S&P 500 (actions disponibles).
 
 ## In-Sample (2015-2020)
 

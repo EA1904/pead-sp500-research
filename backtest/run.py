@@ -26,7 +26,7 @@ def run_backtest():
         sys.exit(0)
 
     print("=" * 70)
-    print("   ExploraQuant - PST_012 (PEAD Strategy Backtester - S&P 500 Complet)")
+    print("   ExploraQuant - PEAD-Surprise Strategy Backtester - S&P 500 Complet")
     print("=" * 70)
 
     local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -127,10 +127,10 @@ def run_backtest():
         print(df_p.to_string(index=False))
 
     # Enregistrer results_comparison.md
-    md_path = os.path.join(local_dir, "3_backtest", "results_comparison.md")
+    md_path = os.path.join(local_dir, "results", "results_comparison.md")
     with open(md_path, "w", encoding="utf-8") as f:
-        f.write("# Rapport de Backtest Comparatif : PST_012 PEAD Strategy (S&P 500 Complet)\n\n")
-        f.write("Ce rapport compare les performances de la stratégie Post-Earnings-Announcement Drift (PST_012) ")
+        f.write("# Rapport de Backtest Comparatif : PEAD-Surprise Strategy (S&P 500 Complet)\n\n")
+        f.write("Ce rapport compare les performances de la stratégie Post-Earnings-Announcement Drift (PEAD-Surprise) ")
         f.write("sur le portefeuille complet de l'univers S&P 500 (actions disponibles).\n\n")
 
         for label, data in [("In-Sample (2015-2020)", results_is), ("Out-of-Sample (2021-2026)", results_oos)]:

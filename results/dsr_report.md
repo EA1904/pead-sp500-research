@@ -1,4 +1,4 @@
-# Rapport de Deflated Sharpe Ratio (DSR) : PST_012 PEAD (S&P 500 Complet)
+# Rapport de Deflated Sharpe Ratio (DSR) : PEAD-Surprise (S&P 500 Complet)
 
 Ce rapport applique la méthodologie de Marcos López de Prado pour corriger le biais de sélection multiple lié au test des 6 variantes de la stratégie PEAD sur l'univers S&P 500 Complet.
 

@@ -1,4 +1,4 @@
-# 📐 Régression Fama-French 5 Facteurs — PST_012 PEAD Strategy
+# 📐 Régression Fama-French 5 Facteurs — PEAD-Surprise Strategy
 
 Ce rapport teste si l'alpha de la stratégie PEAD (Variante 6, Holding 10J) survit après contrôle pour les 5 facteurs de risque systématique de Fama & French (2015) :
 MKT-RF (marché), SMB (taille), HML (value), RMW (profitabilité), CMA (investissement).
