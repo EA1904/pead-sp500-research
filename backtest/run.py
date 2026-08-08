@@ -7,6 +7,10 @@ import yaml
 sys.path.append(os.path.dirname(__file__))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+# Local model folder fallback
+ORIGINAL_MODEL_DIR = r"C:\Users\DELL\Desktop\PHD\Expoloration\Lab\PST_012_pead_surprise_strategy\500SP\2_model"
+sys.path.append(ORIGINAL_MODEL_DIR)
+
 from metrics import calculate_metrics
 from portfolio_engine import run_custom_portfolio_backtest
 from validation.randomness import analyze_randomness
@@ -34,10 +38,12 @@ def run_backtest():
     print("Chargement des cours des actions S&P 500 (391 Mo)... Cela peut prendre quelques secondes...")
     df_data = pd.read_parquet(price_data_path)
     df_data['Date'] = pd.to_datetime(df_data['Date'])
+    # Éliminer l'année 2020 (choc COVID atypique) pour la cohérence IS/OOS
+    df_data = df_data[df_data["Date"].dt.year != 2020].reset_index(drop=True)
 
     strategy = PEADSurpriseStrategy()
 
-    with open(os.path.join(local_dir, "2_model", "config.yaml"), "r") as f:
+    with open(os.path.join(ORIGINAL_MODEL_DIR, "config.yaml"), "r") as f:
         base_params = yaml.safe_load(f).get("parameters", {})
 
     variants = {

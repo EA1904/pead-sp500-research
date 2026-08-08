@@ -43,6 +43,8 @@ def generate_plots():
 
     df_data = pd.read_parquet(price_data_path)
     df_data['Date'] = pd.to_datetime(df_data['Date'])
+    # Éliminer l'année 2020 (choc COVID atypique)
+    df_data = df_data[df_data["Date"].dt.year != 2020].reset_index(drop=True)
 
     # Récupérer les paramètres par défaut de la variante 6
     local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

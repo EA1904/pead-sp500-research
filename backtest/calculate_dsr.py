@@ -7,6 +7,10 @@ import yaml
 
 sys.path.append(os.path.dirname(__file__))
 
+# Local model folder fallback
+ORIGINAL_MODEL_DIR = r"C:\Users\DELL\Desktop\PHD\Expoloration\Lab\PST_012_pead_surprise_strategy\500SP\2_model"
+sys.path.append(ORIGINAL_MODEL_DIR)
+
 from metrics import calculate_metrics
 from portfolio_engine import run_custom_portfolio_backtest
 
@@ -84,10 +88,12 @@ def main():
     price_data_path = r"c:\Users\DELL\Desktop\PHD\New meth\data\sp500_full\ready\sp500_full_ready.parquet"
     df_data = pd.read_parquet(price_data_path)
     df_data['Date'] = pd.to_datetime(df_data['Date'])
+    # Éliminer l'année 2020 (choc COVID atypique)
+    df_data = df_data[df_data["Date"].dt.year != 2020].reset_index(drop=True)
 
     strategy = PEADSurpriseStrategy()
 
-    with open(os.path.join(local_dir, "2_model", "config.yaml"), "r") as f:
+    with open(os.path.join(ORIGINAL_MODEL_DIR, "config.yaml"), "r") as f:
         model_config = yaml.safe_load(f)
     base_params = model_config.get("parameters", {})
 

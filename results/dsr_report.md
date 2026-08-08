@@ -5,11 +5,11 @@ Ce rapport applique la méthodologie de Marcos López de Prado pour corriger le 
 ## Statistiques
 
 - **Nombre d'essais (N)** : 6
-- **Meilleur Sharpe Ratio Ann.** : 2.6978
-- **Variance des Sharpe Ratios** : 0.083702
-- **Sharpe Attendu par simple chance (SR_0)** : 0.3761
-- **Asymétrie (Skewness)** : -0.6124
-- **Cacuminosité (Kurtosis)** : 24.9519
+- **Meilleur Sharpe Ratio Ann.** : 3.0652
+- **Variance des Sharpe Ratios** : 0.053198
+- **Sharpe Attendu par simple chance (SR_0)** : 0.2999
+- **Asymétrie (Skewness)** : 0.7206
+- **Cacuminosité (Kurtosis)** : 25.0767
 - **DSR (Deflated Sharpe Ratio)** : **100.00%**
 
 ## Conclusion Académique

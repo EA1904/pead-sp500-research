@@ -43,6 +43,8 @@ def generate_3d_surface():
     print("Chargement des données pour l'analyse 3D...")
     df_data = pd.read_parquet(price_data_path)
     df_data['Date'] = pd.to_datetime(df_data['Date'])
+    # Éliminer l'année 2020 (choc COVID atypique)
+    df_data = df_data[df_data["Date"].dt.year != 2020].reset_index(drop=True)
 
     # Période Out-of-Sample (OOS)
     cutoff = "2020-12-31"

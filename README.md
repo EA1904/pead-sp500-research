@@ -1,9 +1,9 @@
 # 📊 Post-Earnings Announcement Drift (PEAD) Strategy on S&P 500
 
-![OOS Sharpe](https://img.shields.io/badge/OOS%20Sharpe-2.911-success?style=for-the-badge)
+![OOS Sharpe](https://img.shields.io/badge/OOS%20Sharpe-2.930-success?style=for-the-badge)
 ![DSR Score](https://img.shields.io/badge/DSR%20Score-100%25-blue?style=for-the-badge)
 ![FF5 Alpha](https://img.shields.io/badge/FF5%20Alpha-76.07%25-orange?style=for-the-badge)
-![OOS Return](https://img.shields.io/badge/OOS%20Ann.%20Return-135.01%25-brightgreen?style=for-the-badge)
+![OOS Return](https://img.shields.io/badge/OOS%20Ann.%20Return-135.72%25-brightgreen?style=for-the-badge)
 
 > 🔬 **Status**: Submitted & Under Peer Review. Core signal construction logic and hyperparameter configurations are withheld to protect intellectual property and prevent plagiarized replication. The backtesting engine, statistical validation suite, and detailed reports are open-sourced for peer verification.
 
@@ -12,6 +12,18 @@
 ## 📈 Out-of-Sample Performance (2021–2026)
 
 ![PEAD Strategy Performance](assets/pead_performance.png)
+
+### 📊 QuantStats Performance Diagnostics
+To provide institutional-grade transparency, we generate diagnostic subplots using the `QuantStats` library for the Out-of-Sample validation period (2021–2026) over the S&P 500:
+
+#### 1. Cumulative Returns vs. S&P 500 Index (Benchmark)
+![Cumulative Returns](assets/quantstats_cumulative_returns.png)
+
+#### 2. Monthly Performance Heatmap (%)
+![Monthly Heatmap](assets/quantstats_monthly_heatmap.png)
+
+#### 3. Underwater Drawdown Curve
+![Drawdown](assets/quantstats_drawdown.png)
 
 ---
 
@@ -69,17 +81,17 @@ To select the optimal hyperparameters and verify the strategy's stability across
 ![PEAD 3D Parameter Optimization Surface](assets/pead_parameter_surface.png)
 
 ### In-Sample (IS) vs. Out-of-Sample (OOS) Performance Summary
-To demonstrate the robustness of the strategy and verify the absence of overfitting, we compare the backtest results on the In-Sample (IS) period (2015–2020) against the Out-of-Sample (OOS) validation period (2021–2026) over the full 590-stock historical universe:
+To demonstrate the robustness of the strategy and verify the absence of overfitting, we compare the backtest results on the In-Sample (IS) period (2015–2019, excluding 2020) against the Out-of-Sample (OOS) validation period (2021–2026) over the full 590-stock historical universe (with the structural COVID break of 2020 omitted):
 
-| Parameter | In-Sample (IS: 2015–2020) | Out-of-Sample (OOS: 2021–2026) |
+| Parameter | In-Sample (IS: 2015–2019) | Out-of-Sample (OOS: 2021–2026) |
 | :--- | :---: | :---: |
 | **Asset Universe** | 590 S&P 500 historical constituents | 590 S&P 500 historical constituents |
-| **Total Signals / Trades** | 2,403 | 2,013 |
-| **Annualized Sharpe Ratio** | **2.504** | **2.911** |
-| **Annualized Return** | **93.08%** | **135.01%** |
-| **Maximum Drawdown** | **-45.97%** | **-22.86%** |
+| **Total Signals / Trades** | 1,919 | 2,310 |
+| **Annualized Sharpe Ratio** | **3.325** | **2.930** |
+| **Annualized Return** | **116.37%** | **135.72%** |
+| **Maximum Drawdown** | **-15.03%** | **-22.86%** |
 | **Deflated Sharpe Ratio (DSR)** | **100.00%** | **100.00%** |
-| **Runs Test (p-value)** | **0.0788** (Non-random) | **0.0175** (Non-random / Drift) |
+| **Runs Test (p-value)** | **0.1162** (Non-random) | **0.0189** (Non-random / Drift) |
 
 ---
 
@@ -124,15 +136,15 @@ Empirical results showed that the GAT Hybrid and Propagation models underperform
 
 | Diagnostic Category | Metric / Experiment | Value | Scientific Validation & Quant Interpretation |
 | :--- | :--- | :---: | :--- |
-| **📈 Risk-Adjusted Performance** | Annualized Sharpe Ratio | ![](https://img.shields.io/badge/2.911-brightgreen?style=flat-square) | High risk-adjusted return net of standard frictions (4.0 bps). |
+| **📈 Risk-Adjusted Performance** | Annualized Sharpe Ratio | ![](https://img.shields.io/badge/2.930-brightgreen?style=flat-square) | High risk-adjusted return net of standard frictions (4.0 bps). |
 | **🛡️ Multiple-Testing Correction**| Deflated Sharpe Ratio (DSR) | ![](https://img.shields.io/badge/100.00%25-blue?style=flat-square) | Adjusts for selection bias across $N=6$ trials. Exceeds the 95% critical value ($p < 0.0001$). |
 | **📐 Factor Orthogonality** | Fama-French 5-Factor Alpha | ![](https://img.shields.io/badge/%2B76.07%25-orange?style=flat-square) | Annualized alpha net of systematic risk factors ($t\text{-stat} = 6.472$, $p = 0.0000$). |
 | **📊 Factor Correlation** | FF5 Adjusted $R^2$ | ![](https://img.shields.io/badge/0.255-grey?style=flat-square) | Low correlation with MKT, SMB, HML, RMW, CMA; confirms event-driven profile. |
-| **🎲 Non-Randomness** | Runs Test $p$-value | ![](https://img.shields.io/badge/0.0175-success?style=flat-square) | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
+| **🎲 Non-Randomness** | Runs Test $p$-value | ![](https://img.shields.io/badge/0.0189-success?style=flat-square) | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
 | **⏱️ Execution Feasibility** | Lag 1-Day (Entry at $t+1$) | ![](https://img.shields.io/badge/1.780-success?style=flat-square) | Validates the strategy does not rely on look-ahead bias or high-frequency execution. |
 | **💸 Friction Sensitivity** | 20 bps cost / 100 bps cost | ![](https://img.shields.io/badge/2.754%20%2F%201.950-blue?style=flat-square) | Validates strategy capacity and cost tolerance (retains Sharpe > 1.9 under high frictions). |
-| **✂️ Ablation Studies** | Impact of omitting Stop Loss | ![](https://img.shields.io/badge/--0.828-red?style=flat-square) | Annual Sharpe drops from 2.911 to 2.083, verifying the necessity of the 5% risk stop. |
-| | Impact of omitting Volume Filter | ![](https://img.shields.io/badge/--0.586-red?style=flat-square) | Annual Sharpe drops from 2.911 to 2.325, verifying volume is a key confluence filter. |
+| **✂️ Ablation Studies** | Impact of omitting Stop Loss | ![](https://img.shields.io/badge/--0.759-red?style=flat-square) | Annual Sharpe drops from 2.930 to 2.171, verifying the necessity of the 5% risk stop. |
+| | Impact of omitting Volume Filter | ![](https://img.shields.io/badge/--0.478-red?style=flat-square) | Annual Sharpe drops from 2.930 to 2.452, verifying volume is a key confluence filter. |
 
 ---
 
