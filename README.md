@@ -79,7 +79,11 @@ In our companion academic paper, we construct a dual-layer multiplex graph combi
 - **Supply-Chain Layer (Vertical):** Customer-supplier linkages from FactSet Revere representing direct cash-flow dependencies.
 - **Competition Layer (Horizontal):** Competitive peer clusters based on 4-digit GICS and return correlation.
 
-Using a **Multiplex Graph Attention Network (GAT)**, earnings shocks are propagated to connected economic neighbors prior to their own earnings announcements. 
+Using a **Multiplex Graph Attention Network (GAT)**, earnings shocks are propagated to connected economic neighbors prior to their own earnings announcements.
+
+### 📈 Multiplex GAT Performance vs. Baselines
+
+![GAT Performance Comparison](assets/gat_performance_comparison.png)
 
 ### Performance Summary (Institutional Configuration: 25% Vol Target, ATR Barriers, T+1 Open)
 
@@ -100,6 +104,9 @@ The table below contrasts the baseline against GAT multiplex variants over the O
 *Note: Ex-ante exclusion of Utilities, Financials, and Real Estate (Sector Filtered) removes capital-structure noise, yielding the optimal configuration.*
 
 ### 🎲 GNN Permutation Test: Topology-Driven Alpha
+
+![GNN Permutation Test](assets/gnn_permutation_test.png)
+
 A critical finding of this study is that GAT's predictive edge stems entirely from the **economic network topology itself** rather than the trained attention coefficients. 
 
 Comparing the trained GAT against 10 randomly initialized, untrained GNN models on the same graph yields:
@@ -109,6 +116,13 @@ Comparing the trained GAT against 10 randomly initialized, untrained GNN models 
 - **ROC-AUC (Both):** **0.497** (market-efficient direction)
 
 This confirms the behavioral **investor inattention hypothesis** (Cohen & Frazzini, 2008): simply routing the earnings surprise to the correct economic neighbors is sufficient to capture the lagging drift before market prices adjust.
+
+### 💸 Transaction Cost & Friction Sensitivity
+
+The GAT Multiplex strategy demonstrates strong resilience under severe transaction cost and execution slippage stress:
+
+![Transaction Cost Sensitivity](assets/friction_sensitivity.png)
+
 
 Detailed results and regression tables can be found in the [`results/`](results/) folder.
 

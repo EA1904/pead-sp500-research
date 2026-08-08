@@ -1,8 +1,8 @@
 """
-📊 Générateur de Surface d'Optimisation 3D — PEAD S&P 500
+📊 3D Optimization Surface Generator — PEAD S&P 500
 ================================================================================
-Ce script exécute une recherche par grille sur deux paramètres clés (seuil SUE
-et période de holding) et génère une surface de performance 3D de niveau institutionnel.
+This script runs a grid search on key parameters (SUE threshold and holding period)
+and generates a professional 3D performance surface chart.
 """
 
 import os
@@ -14,7 +14,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import seaborn as sns
 import yaml
 
-# Gestion des imports locaux et du modèle local
+# Local folder imports fallback
 sys.path.append(os.path.dirname(__file__))
 from portfolio_engine import run_custom_portfolio_backtest
 
@@ -32,25 +32,25 @@ except ImportError:
 
 def generate_3d_surface():
     if PEADSurpriseStrategy is None:
-        print("ERROR: PEADSurpriseStrategy (model.py) non trouvé.")
+        print("ERROR: PEADSurpriseStrategy (model.py) not found.")
         sys.exit(1)
 
     price_data_path = r"c:\Users\DELL\Desktop\PHD\New meth\data\sp500_full\ready\sp500_full_ready.parquet"
     if not os.path.exists(price_data_path):
-        print(f"ERROR: Données introuvables à : {price_data_path}")
+        print(f"ERROR: Data not found at: {price_data_path}")
         sys.exit(1)
 
-    print("Chargement des données pour l'analyse 3D...")
+    print("Loading data for 3D analysis...")
     df_data = pd.read_parquet(price_data_path)
     df_data['Date'] = pd.to_datetime(df_data['Date'])
-    # Éliminer l'année 2020 (choc COVID atypique)
+    # Exclude 2020 (atypical COVID structural break)
     df_data = df_data[df_data["Date"].dt.year != 2020].reset_index(drop=True)
 
-    # Période Out-of-Sample (OOS)
+    # Out-of-Sample (OOS) period
     cutoff = "2020-12-31"
     df_data_oos = df_data[df_data["Date"] > cutoff].copy()
 
-    # Charger les configurations de base
+    # Load parameters
     base_params = {}
     config_path = os.path.join(ORIGINAL_MODEL_DIR, "config.yaml")
     if os.path.exists(config_path):
@@ -59,22 +59,22 @@ def generate_3d_surface():
 
     strategy = PEADSurpriseStrategy()
 
-    # Définition de la grille de paramètres
+    # Parameter grid definition
     sue_thresholds = np.array([0.8, 1.2, 1.6, 2.0])
     holding_periods = np.array([5, 10, 15, 20, 25])
 
-    # Création des matrices pour le tracé 3D
+    # Matrices for 3D plotting
     SUE_grid, HOLD_grid = np.meshgrid(sue_thresholds, holding_periods)
     SHARPE_grid = np.zeros_like(SUE_grid, dtype=float)
     RETURN_grid = np.zeros_like(SUE_grid, dtype=float)
 
-    print(f"Lancement de la grille d'optimisation ({SUE_grid.size} backtests)...")
+    print(f"Running grid optimization ({SUE_grid.size} backtests)...")
     for i in range(holding_periods.size):
         for j in range(sue_thresholds.size):
             sue = sue_thresholds[j]
             hold = holding_periods[i]
             
-            print(f"  Simulation : SUE={sue:.1f} | Holding={hold} jours...")
+            print(f"  Simulation : SUE={sue:.1f} | Holding={hold} days...")
             
             params = base_params.copy()
             params.update({
@@ -90,15 +90,14 @@ def generate_3d_surface():
             SHARPE_grid[i, j] = res["metrics"]["sharpe_ratio"]
             RETURN_grid[i, j] = res["metrics"]["annualized_return"] * 100.0
 
-    print("Génération du graphique 3D...")
+    print("Generating 3D plot...")
     
-    # Configuration du style
+    # Styling
     sns.set_theme(style="white")
     fig = plt.figure(figsize=(12, 9))
     ax = fig.add_subplot(111, projection='3d')
 
-    # Tracé de la surface
-    # Utilisation d'une palette de couleur chaude et moderne (viridis/plasma/coolwarm)
+    # Plot surface
     surf = ax.plot_surface(
         SUE_grid, 
         HOLD_grid, 
@@ -111,7 +110,7 @@ def generate_3d_surface():
         cstride=1
     )
 
-    # Ajouter des courbes de niveau projetées en bas du graphique
+    # Projected contour curves at the bottom
     cset = ax.contour(
         SUE_grid, 
         HOLD_grid, 
@@ -122,24 +121,24 @@ def generate_3d_surface():
         alpha=0.5
     )
 
-    # Personnalisation des axes
-    ax.set_xlabel('Seuil SUE (Surprise)', fontsize=11, fontweight='bold', labelpad=10)
-    ax.set_ylabel('Période de Holding (Jours)', fontsize=11, fontweight='bold', labelpad=10)
-    ax.set_zlabel('Ratio de Sharpe (OOS)', fontsize=11, fontweight='bold', labelpad=10)
+    # Label styling
+    ax.set_xlabel('SUE Threshold (Surprise)', fontsize=11, fontweight='bold', labelpad=10)
+    ax.set_ylabel('Holding Period (Days)', fontsize=11, fontweight='bold', labelpad=10)
+    ax.set_zlabel('Sharpe Ratio (OOS)', fontsize=11, fontweight='bold', labelpad=10)
     
-    # Ajuster la hauteur de l'axe Z pour afficher les projections
+    # Adjust Z limits to fit contours
     ax.set_zlim(SHARPE_grid.min() - 0.2, SHARPE_grid.max() + 0.2)
 
-    # Orientation de la caméra pour une meilleure vue tridimensionnelle
+    # Set view angle
     ax.view_init(elev=25, azim=-135)
 
-    # Ajouter une barre de couleur
+    # Colorbar
     cbar = fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10, pad=0.1)
-    cbar.set_label('Ratio de Sharpe Annualisé', fontsize=10, fontweight='bold')
+    cbar.set_label('Annualized Sharpe Ratio', fontsize=10, fontweight='bold')
 
-    plt.title("Surface d'Optimisation des Paramètres de la Stratégie PEAD (3D)\nRatio de Sharpe Out-of-Sample (2021-2026) en fonction du SUE & Holding Period", fontsize=14, fontweight='bold', pad=20)
+    plt.title("PEAD Parameter Optimization Surface (3D)\nOut-of-Sample Sharpe Ratio (2021-2026) vs. SUE Threshold & Holding Period", fontsize=14, fontweight='bold', pad=20)
 
-    # Ajustement et sauvegarde
+    # Save
     plt.tight_layout()
     local_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     out_path = os.path.join(local_dir, "assets", "pead_parameter_surface.png")
@@ -147,7 +146,12 @@ def generate_3d_surface():
     plt.savefig(out_path, dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"SUCCESS: Surface 3D enregistrée avec succès à : {out_path}")
+    print(f"SUCCESS: 3D Parameter Surface saved successfully to: {out_path}")
+
+
+if __name__ == "__main__":
+    generate_3d_surface()
+
 
 
 if __name__ == "__main__":
