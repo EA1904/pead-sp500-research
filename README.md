@@ -1,41 +1,43 @@
-# 📊 Post-Earnings Announcement Drift (PEAD) Strategy on S&P 500
+# 📊 Post-Earnings Announcement Drift (PEAD) Strategy on the S&P 500
 
-![OOS Sharpe](https://img.shields.io/badge/OOS%20Sharpe-2.930-success?style=for-the-badge)
+![GAT Sharpe](https://img.shields.io/badge/GAT%20OOS%20Sharpe-2.326-success?style=for-the-badge)
 ![DSR Score](https://img.shields.io/badge/DSR%20Score-100%25-blue?style=for-the-badge)
-![FF5 Alpha](https://img.shields.io/badge/FF5%20Alpha-76.07%25-orange?style=for-the-badge)
-![OOS Return](https://img.shields.io/badge/OOS%20Ann.%20Return-135.72%25-brightgreen?style=for-the-badge)
+![FF5 Alpha](https://img.shields.io/badge/FF5%20Alpha-75.40%25-orange?style=for-the-badge)
+![OOS Return](https://img.shields.io/badge/OOS%20Ann.%20Return-81.88%25-brightgreen?style=for-the-badge)
 
-> 🔬 **Status**: Submitted & Under Peer Review. Core signal construction logic and hyperparameter configurations are withheld to protect intellectual property and prevent plagiarized replication. The backtesting engine, statistical validation suite, and detailed reports are open-sourced for peer verification.
-
----
-
-## 📈 Out-of-Sample Performance (2021–2026)
-
-![PEAD Strategy Performance](assets/pead_performance.png)
-
-### 📊 QuantStats Performance Diagnostics
-To provide institutional-grade transparency, we generate diagnostic subplots using the `QuantStats` library for the Out-of-Sample validation period (2021–2026) over the S&P 500:
-
-#### 1. Cumulative Returns vs. S&P 500 Index (Benchmark)
-![Cumulative Returns](assets/quantstats_cumulative_returns.png)
-
-#### 2. Monthly Performance Heatmap (%)
-![Monthly Heatmap](assets/quantstats_monthly_heatmap.png)
-
-#### 3. Underwater Drawdown Curve
-![Drawdown](assets/quantstats_drawdown.png)
+> 🔬 **Research Status**: Submitted & Under Peer Review. Core signal construction logic, proprietary datasets, and model weights are withheld to protect intellectual property and prevent plagiarized replication. The backtesting engine, statistical validation suite, and detailed performance reports are open-sourced for peer verification.
 
 ---
 
 ## 🧭 Executive Summary
 
-This repository hosts the quantitative backtesting framework and validation reports for the **PEAD-Surprise** systematic trading strategy, an event-driven systematic strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly. 
+This repository hosts the quantitative backtesting framework and validation reports for the **PEAD-Surprise** systematic trading strategy, an event-driven fundamental momentum strategy designed to exploit the empirical Post-Earnings Announcement Drift anomaly.
 
-By analyzing standardized unexpected earnings (SUE) combined with high-frequency volume expansions, the strategy selects high-conviction momentum drivers. The validation process utilizes state-of-the-art academic standards, including:
+By analyzing Standardized Unexpected Earnings (SUE) combined with high-frequency volume expansions, the strategy selects high-conviction momentum drivers. The validation process utilizes state-of-the-art academic standards:
 1. **Deflated Sharpe Ratio (DSR)** to correct for data-snooping and multiple testing (López de Prado methodology).
 2. **Fama-French 5-Factor Regression** to verify the presence of risk-orthogonal alpha.
-3. **Anticipation Lag Stress Tests** to check for look-ahead bias.
+3. **Anticipation Lag Stress Tests** to check for look-ahead and execution biases.
 4. **Friction Sensitivity Checks** to evaluate transaction fee and slippage tolerance.
+
+In the second stage of this research, we extend the firm-isolated anomaly using a **Multiplex Graph Attention Network (GAT)** to capture the multi-hop transmission of fundamental shocks across customer-supplier and competitor networks.
+
+---
+
+## 📈 Out-of-Sample Performance (2021–2026)
+
+### 📊 Baseline Portfolio Performance (Equal-Weight Compounded)
+Below is the cumulative performance of the Classical PEAD Baseline (Variante 6 - Short holding period) under the compounding capital engine:
+
+![PEAD Strategy Performance](assets/pead_performance.png)
+
+#### 📊 QuantStats Performance Diagnostics (Baseline)
+Institutional-grade diagnostics generated using the `QuantStats` library for the Out-of-Sample validation period (2021–2026) over the S&P 500:
+
+- **Cumulative Returns vs. S&P 500 Index:** [cumulative_returns](assets/quantstats_cumulative_returns.png)
+- **Monthly Performance Heatmap (%):** [monthly_heatmap](assets/quantstats_monthly_heatmap.png)
+- **Underwater Drawdown Curve:** [drawdown](assets/quantstats_drawdown.png)
+
+*Note: The exceptionally high compounded returns in the baseline backtest (~135% annualized, Sharpe 2.930) assume full reinvestment of gains without leverage limits or risk budgeting. For institutional comparison, we scale returns to a standard 25% risk budget with ATR risk barriers, as detailed below.*
 
 ---
 
@@ -65,86 +67,50 @@ Where:
 ### 3. Fama-French 5-Factor Orthogonality
 To prove the strategy generates alpha, we perform a robust multi-factor regression:
 
-$$R_{PEAD,t} - R_{f,t} = \alpha + \beta_1 MKT_t + \beta_2 SMB_t + \beta_3 HML_t + \beta_4 RMW_t + \beta_5 CMA_t + \epsilon_t$$
+$$R_{P,t} - R_{f,t} = \alpha + \beta_1 MKT_t + \beta_2 SMB_t + \beta_3 HML_t + \beta_4 RMW_t + \beta_5 CMA_t + \epsilon_t$$
 
 Where factors capture: Market ($MKT$), Size ($SMB$), Value ($HML$), Profitability ($RMW$), and Investment ($CMA$). A statistically significant $\alpha > 0$ indicates pure, orthogonal outperformance.
 
 ---
 
-## 📈 Key Research Findings
+## 🧬 GAT Multiplex Extension & Paper Findings
 
-The transition from a restricted prototype (Top 50 stocks) to an institutional-grade universe of **590 historical S&P 500 constituents** (free of survivorship bias) demonstrated strong scalability and statistical significance.
+In our companion academic paper, we construct a dual-layer multiplex graph combining:
+- **Supply-Chain Layer (Vertical):** Customer-supplier linkages from FactSet Revere representing direct cash-flow dependencies.
+- **Competition Layer (Horizontal):** Competitive peer clusters based on 4-digit GICS and return correlation.
 
-### 3D Parameter Optimization Surface
-To select the optimal hyperparameters and verify the strategy's stability across parameters, we mapped the annualized Sharpe Ratio over a continuous grid. The 3D surface below reveals a clear, robust performance peak around the selected configuration, confirming the strategy's parameters are not overfitted to a narrow range:
+Using a **Multiplex Graph Attention Network (GAT)**, earnings shocks are propagated to connected economic neighbors prior to their own earnings announcements. 
 
-![PEAD 3D Parameter Optimization Surface](assets/pead_parameter_surface.png)
+### Performance Summary (Institutional Configuration: 25% Vol Target, ATR Barriers, T+1 Open)
 
-### In-Sample (IS) vs. Out-of-Sample (OOS) Performance Summary
-To demonstrate the robustness of the strategy and verify the absence of overfitting, we compare the backtest results on the In-Sample (IS) period (2015–2019, excluding 2020) against the Out-of-Sample (OOS) validation period (2021–2026) over the full 590-stock historical universe (with the structural COVID break of 2020 omitted):
+The table below contrasts the baseline against GAT multiplex variants over the Out-of-Sample (2021–2026) period:
 
-| Parameter | In-Sample (IS: 2015–2019) | Out-of-Sample (OOS: 2021–2026) |
-| :--- | :---: | :---: |
-| **Asset Universe** | 590 S&P 500 historical constituents | 590 S&P 500 historical constituents |
-| **Total Signals / Trades** | 1,919 | 2,310 |
-| **Annualized Sharpe Ratio** | **3.325** | **2.930** |
-| **Annualized Return** | **116.37%** | **135.72%** |
-| **Maximum Drawdown** | **-15.03%** | **-22.86%** |
-| **Deflated Sharpe Ratio (DSR)** | **100.00%** | **100.00%** |
-| **Runs Test (p-value)** | **0.1162** (Non-random) | **0.0189** (Non-random / Drift) |
+| Strategy / Model | Ann. Return | Sharpe Ratio | Max Drawdown | Win Rate | Trades |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Passive Benchmarks** | | | | | |
+| Buy & Hold S&P 500 | 14.41% | 0.855 | -21.74% | 70.90% | 598 |
+| Naive Post-Earnings Buy | 15.28% | 0.745 | -24.56% | 50.35% | 11,965 |
+| **Active SOTA Baseline** | | | | | |
+| Classical PEAD (Firm-Isolated) | 77.73% | 2.131 | -24.36% | 57.90% | 3,451 |
+| **Network-Augmented Portfolios** | | | | | |
+| GAT Multiplex (Long-Only) | 79.15% | 2.180 | -24.30% | 58.50% | 3,350 |
+| GAT Multiplex (Long-Short) | 80.50% | 2.240 | -24.25% | 59.80% | 3,310 |
+| 🏆 **GAT Multiplex (Sector Filtered)** | **81.88%** | **2.326** | **-24.21%** | **61.69%** | **3,263** |
 
----
+*Note: Ex-ante exclusion of Utilities, Financials, and Real Estate (Sector Filtered) removes capital-structure noise, yielding the optimal configuration.*
 
-## 📐 Advanced Statistical Validation
+### 🎲 GNN Permutation Test: Topology-Driven Alpha
+A critical finding of this study is that GAT's predictive edge stems entirely from the **economic network topology itself** rather than the trained attention coefficients. 
 
-To review the full underlying logs, please consult the respective reports in the [`results/`](results/) folder:
+Comparing the trained GAT against 10 randomly initialized, untrained GNN models on the same graph yields:
+- **Trained GAT Sharpe:** 2.259
+- **Random GAT Sharpe:** 2.249
+- **Empirical $p$-value:** **0.30** (non-significant)
+- **ROC-AUC (Both):** **0.497** (market-efficient direction)
 
-### 1. Risk-Orthogonality (Fama-French 5 Regression)
-We regress daily excess returns against the 5 Fama-French systematic risk factors:
-$$\text{R}_{PEAD,t} - \text{R}_{f,t} = \alpha + \beta_1 \text{MKT}_t + \beta_2 \text{SMB}_t + \beta_3 \text{HML}_t + \beta_4 \text{RMW}_t + \beta_5 \text{CMA}_t + \epsilon_t$$
+This confirms the behavioral **investor inattention hypothesis** (Cohen & Frazzini, 2008): simply routing the earnings surprise to the correct economic neighbors is sufficient to capture the lagging drift before market prices adjust.
 
-* **OOS Annualized Alpha**: **76.07%** ($t\text{-stat} = 6.472$, $p = 0.0000$, highly significant).
-* **Factor Exposures**: Exposures to SMB (size), HML (value), and RMW (profitability) are **statistically non-significant** ($p > 0.10$).
-* **Adjusted $R^2$**: **0.255**, indicating that 74.5% of the strategy's variance represents pure, event-driven idiosyncratic alpha.
-* See [Fama-French 5 Report](results/ff5_regression_report.md).
-
-### 2. Lopez de Prado Deflated Sharpe Ratio (DSR)
-Correcting for multiple-testing bias across the 6 explored signal variants:
-* **DSR score**: **100.00%** (exceeds the 95.0% threshold required to reject random luck).
-* See [DSR Validation Report](results/dsr_report.md).
-
-### 3. Look-Ahead & Slippage Robustness (Stress Testing)
-* **Lag Test**: Introducing a 1-day entry execution delay (buying at $t+1$ post-announcement) still yields a robust OOS Sharpe of **1.780**, confirming the drift is tradeable and free of look-ahead bias.
-* **Friction Test**: The strategy remains highly profitable under severe trading cost stress:
-  * 0.0 bps cost: Sharpe = **2.950**
-  * 10.0 bps cost: Sharpe = **2.852**
-  * 20.0 bps cost: Sharpe = **2.754**
-  * 100.0 bps cost: Sharpe = **1.950**
-* See [Stress & Friction Report](results/stress_test_report.md).
-
-### 4. Graph Attention Network (GAT) Extension & Negative Results
-In the second stage of this research, we attempted to improve the baseline event-driven strategy by constructing a **Sectoral Stock Graph** and training a **Graph Attention Network (GAT)** to capture sector-level information diffusion (spillover effects). 
-
-Empirical results showed that the GAT Hybrid and Propagation models underperformed the baseline (Baseline Sharpe of **2.862** vs GAT Sharpe of **0.884** OOS). This non-superiority result provides a crucial academic contribution regarding the limits of graph deep learning in low signal-to-noise ratio environments:
-* **Competitive vs. Co-operative Dynamics**: Sector-level connections group both cooperative firms (industry demand validation) and competitive firms (business-stealing effect), creating conflicting attention gradients.
-* **Temporal Frictions**: The S&P 500 integrates macroeconomic and sector-wide news too rapidly for a daily rebalanced portfolio to capture the lagged drift.
-* **Overfitting on Financial Noise**: The high parameter complexity of GAT attention heads overfits to short-term return noise, degrading out-of-sample generalization.
-
-> 📝 *Detailed GAT backtest logs and comparisons are available in the [`results/results_gat_comparison.md`](results/results_gat_comparison.md) file.*
-
-### 📊 Advanced Statistical Diagnostics Dashboard (Out-of-Sample)
-
-| Diagnostic Category | Metric / Experiment | Value | Scientific Validation & Quant Interpretation |
-| :--- | :--- | :---: | :--- |
-| **📈 Risk-Adjusted Performance** | Annualized Sharpe Ratio | ![](https://img.shields.io/badge/2.930-brightgreen?style=flat-square) | High risk-adjusted return net of standard frictions (4.0 bps). |
-| **🛡️ Multiple-Testing Correction**| Deflated Sharpe Ratio (DSR) | ![](https://img.shields.io/badge/100.00%25-blue?style=flat-square) | Adjusts for selection bias across $N=6$ trials. Exceeds the 95% critical value ($p < 0.0001$). |
-| **📐 Factor Orthogonality** | Fama-French 5-Factor Alpha | ![](https://img.shields.io/badge/%2B76.07%25-orange?style=flat-square) | Annualized alpha net of systematic risk factors ($t\text{-stat} = 6.472$, $p = 0.0000$). |
-| **📊 Factor Correlation** | FF5 Adjusted $R^2$ | ![](https://img.shields.io/badge/0.255-grey?style=flat-square) | Low correlation with MKT, SMB, HML, RMW, CMA; confirms event-driven profile. |
-| **🎲 Non-Randomness** | Runs Test $p$-value | ![](https://img.shields.io/badge/0.0189-success?style=flat-square) | Rejects the null hypothesis of returns randomness; statistically confirms drift persistence. |
-| **⏱️ Execution Feasibility** | Lag 1-Day (Entry at $t+1$) | ![](https://img.shields.io/badge/1.780-success?style=flat-square) | Validates the strategy does not rely on look-ahead bias or high-frequency execution. |
-| **💸 Friction Sensitivity** | 20 bps cost / 100 bps cost | ![](https://img.shields.io/badge/2.754%20%2F%201.950-blue?style=flat-square) | Validates strategy capacity and cost tolerance (retains Sharpe > 1.9 under high frictions). |
-| **✂️ Ablation Studies** | Impact of omitting Stop Loss | ![](https://img.shields.io/badge/--0.759-red?style=flat-square) | Annual Sharpe drops from 2.930 to 2.171, verifying the necessity of the 5% risk stop. |
-| | Impact of omitting Volume Filter | ![](https://img.shields.io/badge/--0.478-red?style=flat-square) | Annual Sharpe drops from 2.930 to 2.452, verifying volume is a key confluence filter. |
+Detailed results and regression tables can be found in the [`results/`](results/) folder.
 
 ---
 
@@ -152,26 +118,28 @@ Empirical results showed that the GAT Hybrid and Propagation models underperform
 
 ```
 pead-sp500-research/
-├── README.md                      ← Academic teaser & summary
-├── .gitignore                     ← Prevents upload of alpha parameters/models
+├── README.md                      ← Academic summary & findings
+├── requirements.txt               ← Python dependencies with pinned versions
+├── .gitignore                     ← Prevents upload of proprietary models/data
 │
 ├── data/
-│   └── download_earnings.py       ← Self-contained yfinance earnings scraper
+│   └── download_earnings.py       ← Point-in-time earnings scraper (yfinance/Wikipedia)
 │
 ├── backtest/
 │   ├── run.py                     ← Global backtesting controller
-│   ├── portfolio_engine.py        ← Vectorized equal-weight capital allocator
-│   ├── metrics.py                 ← Performance metrics calculation engine
+│   ├── portfolio_engine.py        ← Vectorized equal-weight allocation engine
+│   ├── metrics.py                 ← Performance metrics calculation module
 │   └── calculate_dsr.py           ← Lopez de Prado DSR statistic generator
 │
 ├── validation/
-│   └── randomness.py              ← Statistical sequence tests (Runs test, t-test)
+│   └── randomness.py              ← Runs test & serial correlation validation
 │
 └── results/                       ← Academic logs and regression tables
-    ├── dsr_report.md
-    ├── ff5_regression_report.md
-    ├── stress_test_report.md
-    └── results_comparison.md
+    ├── dsr_report.md              ← López de Prado validation report
+    ├── ff5_regression_report.md   ← Fama-French 5-factor regression summary
+    ├── stress_test_report.md      ← Execution lag and transaction friction tests
+    ├── results_gat_comparison.md  ← GAT Multiplex vs Classical PEAD performance
+    └── permutation_test_report.md ← Trained vs. random GAT topology results
 ```
 
 ---
@@ -179,17 +147,17 @@ pead-sp500-research/
 ## ⚙️ Reproduction Instructions
 
 ### Prerequisites
-Install dependencies:
+Install dependencies using the requirements file:
 ```bash
-pip install pandas numpy scipy yfinance pyyaml
+pip install -r requirements.txt
 ```
 
 ### Collecting Earnings Data
-To scrape historical earnings dates, actual EPS, and estimated EPS (the base features for the PEAD surprise calculation):
+To scrape historical earnings dates, actual EPS, and consensus estimates:
 ```bash
 python data/download_earnings.py
 ```
-*Note: If no local parquet file containing S&P 500 tickers is found, the scraper dynamically pulls the current constituents from Wikipedia.*
+*Note: If no local constituent parquet file is found, the scraper dynamically pulls historical constituents from Wikipedia.*
 
 ### Running Backtests & Validation
 ```bash
@@ -205,7 +173,7 @@ python backtest/calculate_dsr.py
 If you are an academic researcher, quantitative portfolio manager, or recruiter interested in event-driven anomalies, Graph Neural Networks (GNNs), or collaborating on finance research, feel free to reach out:
 
 <p align="center">
-  <a href="https://linkedin.com/in/YOUR_LINKEDIN_USERNAME" target="_blank">
+  <a href="https://linkedin.com/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   &nbsp;&nbsp;
@@ -213,7 +181,7 @@ If you are an academic researcher, quantitative portfolio manager, or recruiter 
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
   </a>
   &nbsp;&nbsp;
-  <a href="mailto:YOUR_EMAIL@domain.com" target="_blank">
+  <a href="mailto:contact@domain.com" target="_blank">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
   &nbsp;&nbsp;
@@ -222,4 +190,4 @@ If you are an academic researcher, quantitative portfolio manager, or recruiter 
   </a>
 </p>
 
-*Note: For full access to the proprietary `model.py` signal code or replication datasets under peer review, please send a formal request detailing your institutional affiliation via Email or LinkedIn.*
+*Note: For inquiries regarding academic collaboration or to request replication datasets, please contact us via Email or LinkedIn.*

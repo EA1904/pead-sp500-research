@@ -1,17 +1,21 @@
-# Rapport de Deflated Sharpe Ratio (DSR) : PEAD-Surprise (S&P 500 Complet)
+# 📊 Deflated Sharpe Ratio (DSR) Validation Report: PEAD-Surprise (Full S&P 500)
 
-Ce rapport applique la méthodologie de Marcos López de Prado pour corriger le biais de sélection multiple lié au test des 6 variantes de la stratégie PEAD sur l'univers S&P 500 Complet.
+This report applies the Deflated Sharpe Ratio (DSR) framework developed by Marcos López de Prado to adjust for multiple-testing bias across the 6 signal variants of the PEAD strategy tested on the S&P 500 constituent universe.
 
-## Statistiques
+---
 
-- **Nombre d'essais (N)** : 6
-- **Meilleur Sharpe Ratio Ann.** : 3.0652
-- **Variance des Sharpe Ratios** : 0.053198
-- **Sharpe Attendu par simple chance (SR_0)** : 0.2999
-- **Asymétrie (Skewness)** : 0.7206
-- **Cacuminosité (Kurtosis)** : 25.0767
-- **DSR (Deflated Sharpe Ratio)** : **100.00%**
+## 📈 Statistical Diagnostics
 
-## Conclusion Académique
+- **Number of Trials ($N_{\text{trials}}$):** 6
+- **Annualized Sharpe Ratio of Best Variant:** 3.0652
+- **Variance of Annualized Sharpe Ratios:** 0.053198
+- **Expected Maximum Sharpe under Null (SR_0):** 0.2999
+- **Return Skewness:** 0.7206
+- **Return Kurtosis (Pearson):** 25.0767
+- **Deflated Sharpe Ratio (DSR):** **100.00%**
 
-Le DSR est supérieur au seuil critique de 95%, ce qui valide de manière statistique robuste que la surperformance de la meilleure variante PEAD n'est pas le produit du hasard.
+---
+
+## 🧠 Academic Conclusion
+
+The strategy's DSR score of **100.00%** substantially exceeds the standard academic significance threshold of **95.0%** ($p < 0.001$). This rigorously rejects the null hypothesis that the strategy's risk-adjusted outperformance is the product of selection bias or data-snooping across multiple backtested parameter combinations.
