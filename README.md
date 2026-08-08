@@ -109,6 +109,16 @@ Correcting for multiple-testing bias across the 6 explored signal variants:
   * 100.0 bps cost: Sharpe = **1.950**
 * See [Stress & Friction Report](results/stress_test_report.md).
 
+### 4. Graph Attention Network (GAT) Extension & Negative Results
+In the second stage of this research, we attempted to improve the baseline event-driven strategy by constructing a **Sectoral Stock Graph** and training a **Graph Attention Network (GAT)** to capture sector-level information diffusion (spillover effects). 
+
+Empirical results showed that the GAT Hybrid and Propagation models underperformed the baseline (Baseline Sharpe of **2.862** vs GAT Sharpe of **0.884** OOS). This non-superiority result provides a crucial academic contribution regarding the limits of graph deep learning in low signal-to-noise ratio environments:
+* **Competitive vs. Co-operative Dynamics**: Sector-level connections group both cooperative firms (industry demand validation) and competitive firms (business-stealing effect), creating conflicting attention gradients.
+* **Temporal Frictions**: The S&P 500 integrates macroeconomic and sector-wide news too rapidly for a daily rebalanced portfolio to capture the lagged drift.
+* **Overfitting on Financial Noise**: The high parameter complexity of GAT attention heads overfits to short-term return noise, degrading out-of-sample generalization.
+
+> 📝 *Detailed GAT backtest logs and comparisons are available in the [`results/results_gat_comparison.md`](results/results_gat_comparison.md) file.*
+
 ### 📊 Advanced Statistical Diagnostics Dashboard (Out-of-Sample)
 
 | Diagnostic Category | Metric / Experiment | Value | Scientific Validation & Quant Interpretation |
