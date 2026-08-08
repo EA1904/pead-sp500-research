@@ -1,6 +1,6 @@
 # 📊 Post-Earnings Announcement Drift (PEAD) Strategy on S&P 500
 
-> 🔬 **Status**: Academic research under preparation for journal submission. The strategy's core alpha generation model (`model.py` / `config.yaml`) is proprietary and withheld from this public repository. The backtesting engine, statistical validation suite, and detailed results are open-sourced for transparency and scientific validation.
+> 🔬 **Status**: Submitted & Under Peer Review. Core signal construction logic and hyperparameter configurations are withheld to protect intellectual property and prevent plagiarized replication. The backtesting engine, statistical validation suite, and detailed reports are open-sourced for peer verification.
 
 ---
 
@@ -19,6 +19,38 @@ By analyzing standardized unexpected earnings (SUE) combined with high-frequency
 2. **Fama-French 5-Factor Regression** to verify the presence of risk-orthogonal alpha.
 3. **Anticipation Lag Stress Tests** to check for look-ahead bias.
 4. **Friction Sensitivity Checks** to evaluate transaction fee and slippage tolerance.
+
+---
+
+## 🧮 Theoretical Framework
+
+### 1. Standardized Unexpected Earnings (SUE)
+The PEAD anomaly states that stock prices drift in the direction of earnings surprise for several weeks following the announcement date. The surprise is standardized as:
+
+$$SUE_{i,t} = \frac{EPS_{i,t} - \mathbb{E}_{t-1}[EPS_{i,t}]}{\sigma_i}$$
+
+Where:
+* $EPS_{i,t}$ is the actual reported Earnings Per Share for asset $i$ at quarter $t$.
+* $\mathbb{E}_{t-1}[EPS_{i,t}]$ is the consensus analyst estimate.
+* $\sigma_i$ is the historical standard deviation of earnings surprises over a rolling window.
+
+### 2. Deflated Sharpe Ratio (DSR)
+When backtesting multiple strategies, the probability of selecting an overfitted model increases with the number of trials ($N$). To adjust for this, we calculate the DSR:
+
+$$DSR = \Phi \left( \frac{(\widehat{SR} - SR_0)\sqrt{T-1}}{\sqrt{1 - \hat{S}_k \widehat{SR} + \frac{\hat{K}_k-1}{4} \widehat{SR}^2}} \right)$$
+
+Where:
+* $\widehat{SR}$ is the annualized Sharpe ratio of the selected strategy.
+* $SR_0$ is the expected maximum Sharpe ratio under the null hypothesis (calculated using the variance of trial Sharpe ratios $\sigma_{SR}^2$ and $N$).
+* $\hat{S}_k$ and $\hat{K}_k$ represent the skewness and kurtosis of the daily returns.
+* $T$ is the number of trading observations.
+
+### 3. Fama-French 5-Factor Orthogonality
+To prove the strategy generates alpha, we perform a robust multi-factor regression:
+
+$$R_{PEAD,t} - R_{f,t} = \alpha + \beta_1 MKT_t + \beta_2 SMB_t + \beta_3 HML_t + \beta_4 RMW_t + \beta_5 CMA_t + \epsilon_t$$
+
+Where factors capture: Market ($MKT$), Size ($SMB$), Value ($HML$), Profitability ($RMW$), and Investment ($CMA$). A statistically significant $\alpha > 0$ indicates pure, orthogonal outperformance.
 
 ---
 
