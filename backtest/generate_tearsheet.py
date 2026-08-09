@@ -174,7 +174,7 @@ def main():
     fig.patch.set_facecolor(BG)
 
     # GridSpec: 3 rows for plots on left, 1 column for table on right
-    gs = GridSpec(3, 3, figure=fig, width_ratios=[1.6, 1.6, 1.8], wspace=0.28, hspace=0.28)
+    gs = GridSpec(3, 3, figure=fig, width_ratios=[1.5, 1.5, 2.2], wspace=0.30, hspace=0.28)
 
     # Plot Axes
     ax_cum = fig.add_subplot(gs[0, 0:2])
@@ -250,7 +250,7 @@ def main():
     # Grid details - dynamically space the 9 items vertically
     row_y = np.linspace(0.83, 0.08, len(metrics_list))
     row_height = (0.83 - 0.08) / (len(metrics_list) - 1)
-    col_x = [0.0, 0.44, 0.65, 0.84] # Label, GAT, Baseline, B&H
+    col_x = [0.0, 0.46, 0.68, 0.86] # Label, GAT, Baseline, B&H
     
     # Column headers
     ax_table.text(col_x[0], 0.88, "Metric", color=TEXT_SEC, fontsize=9.5, fontweight="bold")
@@ -290,7 +290,7 @@ def main():
     # Save image
     assets_dir = os.path.join(local_dir, "assets")
     os.makedirs(assets_dir, exist_ok=True)
-    out_path = os.path.join(assets_dir, "strategy_tearsheet.png")
+    out_path = os.path.join(assets_dir, "strategy_performance_tearsheet_v2.png")
     
     plt.savefig(out_path, dpi=300, bbox_inches="tight", facecolor=BG)
     plt.close()

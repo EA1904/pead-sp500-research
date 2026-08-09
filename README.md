@@ -28,7 +28,7 @@ In the second stage of this research, we extend the firm-isolated anomaly using 
 ### 📊 Strategy Performance Tearsheet (OOS 2021–2026)
 Below is the unified strategy tearsheet for the Out-of-Sample validation period (2021–2026) over the S&P 500 universe, comparing the **GAT Multiplex (Sector Filtered)** model, the **Classical PEAD Baseline**, and the **S&P 500 Buy & Hold** index:
 
-![Strategy Performance Tearsheet](assets/strategy_tearsheet.png?v=4)
+![Strategy Performance Tearsheet](assets/strategy_performance_tearsheet_v2.png)
 
 This comprehensive report displays:
 1. **Cumulative Growth (Log Scale)**: The compounded growth of initial capital (Base 100).
