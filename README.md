@@ -25,19 +25,18 @@ In the second stage of this research, we extend the firm-isolated anomaly using 
 
 ## 📈 Out-of-Sample Performance (2021–2026)
 
-### 📊 Baseline Portfolio Performance (Equal-Weight Compounded)
-Below is the cumulative performance of the Classical PEAD Baseline (Variante 6 - Short holding period) under the compounding capital engine:
+### 📊 Strategy Performance Tearsheet (OOS 2021–2026)
+Below is the unified strategy tearsheet for the Out-of-Sample validation period (2021–2026) over the S&P 500 universe, comparing the **GAT Multiplex (Sector Filtered)** model, the **Classical PEAD Baseline**, and the **S&P 500 Buy & Hold** index:
 
-![PEAD Strategy Performance](assets/pead_performance.png)
+![Strategy Performance Tearsheet](assets/strategy_tearsheet.png)
 
-#### 📊 QuantStats Performance Diagnostics (Baseline)
-Institutional-grade diagnostics generated using the `QuantStats` library for the Out-of-Sample validation period (2021–2026) over the S&P 500:
+This comprehensive report displays:
+1. **Cumulative Growth (Log Scale)**: The compounded growth of initial capital (Base 100).
+2. **Underwater Drawdown**: The risk exposure and drawdown profile over time.
+3. **Rolling Sharpe (6-Month)**: The risk-adjusted return dynamics.
+4. **Performance Metrics**: A detailed comparative statistics table showing return, volatility, Sharpe, Calmar, Sortino, Beta, and Fama-French Alpha.
 
-- **Cumulative Returns vs. S&P 500 Index:** [cumulative_returns](assets/quantstats_cumulative_returns.png)
-- **Monthly Performance Heatmap (%):** [monthly_heatmap](assets/quantstats_monthly_heatmap.png)
-- **Underwater Drawdown Curve:** [drawdown](assets/quantstats_drawdown.png)
-
-*Note: The exceptionally high compounded returns in the baseline backtest (~135% annualized, Sharpe 2.930) assume full reinvestment of gains without leverage limits or risk budgeting. For institutional comparison, we scale returns to a standard 25% risk budget with ATR risk barriers, as detailed below.*
+*Note: Baseline compounding assumptions (~77.7% annualized, Sharpe 2.13) assume full reinvestment of gains. For institutional comparison, we scale returns to a standard 25% ex-ante risk budget with ATR barriers as detailed in the paper.*
 
 ---
 
