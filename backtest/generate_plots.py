@@ -141,8 +141,3 @@ def generate_plots():
 
 if __name__ == "__main__":
     generate_plots()
-e enregistré avec succès à : {out_img_path}")
-
-
-if __name__ == "__main__":
-    generate_plots()
