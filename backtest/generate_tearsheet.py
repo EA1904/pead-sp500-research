@@ -220,27 +220,20 @@ def main():
     ax_roll.plot(roll_sharpe_bh.index, roll_sharpe_bh.values, color=COLOR_BH, lw=1.0, ls="--", label="S&P 500")
     
     ax_roll.set_ylabel("Rolling Sharpe (6-Month)", fontsize=9.5)
-    ax_roll.set_ylim(-1.5, 4.5)
+    
+    # Avoid clipping by dynamically setting ylim based on actual values
+    all_sharpes = pd.concat([roll_sharpe_gat, roll_sharpe_base, roll_sharpe_bh]).dropna()
+    min_s, max_s = all_sharpes.min(), all_sharpes.max()
+    ax_roll.set_ylim(min_s - 0.4, max_s + 0.4)
+    
     ax_roll.legend(loc="upper left", facecolor=SURFACE, edgecolor=BORDER, fontsize=8.5)
 
     # ── 4. Detailed Statistics Table (Right column) ──────────────────────────
     ax_table.axis("off")
     
     # Custom drawn text table for Figma-style quality
-    ax_table.text(0.0, 0.95, "PERFORMANCE METRICS", color=TEXT_PRI, fontsize=12, fontweight="bold")
-    ax_table.text(0.0, 0.92, "Out-of-Sample Period: 2021–2026", color=TEXT_SEC, fontsize=8.5)
-    
-    # Grid details
-    row_y = np.linspace(0.85, 0.05, 11)
-    col_x = [0.0, 0.52, 0.70, 0.86] # Label, GAT, Baseline, B&H
-    
-    # Column headers
-    ax_table.text(col_x[0], 0.88, "Metric", color=TEXT_SEC, fontsize=9, fontweight="bold")
-    ax_table.text(col_x[1], 0.88, "GAT*", color=COLOR_GAT, fontsize=9, fontweight="bold", ha="left")
-    ax_table.text(col_x[2], 0.88, "Base", color=COLOR_BASE, fontsize=9, fontweight="bold", ha="left")
-    ax_table.text(col_x[3], 0.88, "SPY", color=COLOR_BH, fontsize=9, fontweight="bold", ha="left")
-    
-    ax_table.axhline(0.865, color=BORDER, lw=1.2)
+    ax_table.text(0.0, 0.95, "PERFORMANCE METRICS", color=TEXT_PRI, fontsize=12.5, fontweight="bold")
+    ax_table.text(0.0, 0.92, "Out-of-Sample Period: 2021–2026", color=TEXT_SEC, fontsize=9.0)
     
     metrics_list = [
         ("Cumulative Return", "cum_ret"),
@@ -254,26 +247,39 @@ def main():
         ("Fama-French Alpha", "alpha"),
     ]
     
+    # Grid details - dynamically space the 9 items vertically
+    row_y = np.linspace(0.83, 0.08, len(metrics_list))
+    row_height = (0.83 - 0.08) / (len(metrics_list) - 1)
+    col_x = [0.0, 0.44, 0.65, 0.84] # Label, GAT, Baseline, B&H
+    
+    # Column headers
+    ax_table.text(col_x[0], 0.88, "Metric", color=TEXT_SEC, fontsize=9.5, fontweight="bold")
+    ax_table.text(col_x[1], 0.88, "GAT*", color=COLOR_GAT, fontsize=9.5, fontweight="bold", ha="left")
+    ax_table.text(col_x[2], 0.88, "Base", color=COLOR_BASE, fontsize=9.5, fontweight="bold", ha="left")
+    ax_table.text(col_x[3], 0.88, "SPY", color=COLOR_BH, fontsize=9.5, fontweight="bold", ha="left")
+    
+    ax_table.axhline(0.865, color=BORDER, lw=1.2)
+    
     for i, (label, key) in enumerate(metrics_list):
         y_coord = row_y[i]
         
         # Row shading
-        bg_alpha = 0.04 if i % 2 == 0 else 0.0
-        rect = plt.Rectangle((0, y_coord-0.025), 1.0, 0.05, transform=ax_table.transAxes,
+        bg_alpha = 0.06 if i % 2 == 0 else 0.0
+        rect = plt.Rectangle((0, y_coord - row_height/2.0), 1.0, row_height, transform=ax_table.transAxes,
                              facecolor=COLOR_GAT if bg_alpha > 0 else "none", alpha=bg_alpha, zorder=0)
         ax_table.add_patch(rect)
         
-        # Text values
+        # Text values - make numbers bold for GAT, Base, and SPY to stand out
         is_highlight = label in ["Sharpe Ratio", "Ann. Return (OOS)", "Fama-French Alpha"]
-        font_weight = "bold" if is_highlight else "normal"
+        label_weight = "bold" if is_highlight else "normal"
         
-        ax_table.text(col_x[0], y_coord, label, color=TEXT_PRI, fontsize=9.0, fontweight=font_weight, va="center")
-        ax_table.text(col_x[1], y_coord, stats_gat[key], color=COLOR_GAT, fontsize=9.0, fontweight="bold", ha="left", va="center")
-        ax_table.text(col_x[2], y_coord, stats_base[key], color=TEXT_PRI, fontsize=9.0, ha="left", va="center")
-        ax_table.text(col_x[3], y_coord, stats_bh[key], color=COLOR_BH, fontsize=9.0, ha="left", va="center")
+        ax_table.text(col_x[0], y_coord, label, color=TEXT_PRI, fontsize=10.0, fontweight=label_weight, va="center")
+        ax_table.text(col_x[1], y_coord, stats_gat[key], color=COLOR_GAT, fontsize=10.0, fontweight="bold", ha="left", va="center")
+        ax_table.text(col_x[2], y_coord, stats_base[key], color=TEXT_PRI, fontsize=10.0, fontweight="bold", ha="left", va="center")
+        ax_table.text(col_x[3], y_coord, stats_bh[key], color=COLOR_BH, fontsize=10.0, fontweight="bold", ha="left", va="center")
         
         # Subtle horizontal divider
-        ax_table.axhline(y_coord - 0.028, color=BORDER, lw=0.6, alpha=0.5)
+        ax_table.axhline(y_coord - row_height/2.0, color=BORDER, lw=0.6, alpha=0.5)
         
     # Table footnote
     ax_table.text(0.0, 0.01, "* GAT Multiplex statistics from paper.", color=TEXT_SEC, fontsize=8, style="italic")
