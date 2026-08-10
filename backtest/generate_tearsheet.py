@@ -265,7 +265,7 @@ def main():
         
         # Row shading
         bg_alpha = 0.06 if i % 2 == 0 else 0.0
-        rect = plt.Rectangle((0, y_coord - row_height/2.0), 1.0, row_height, transform=ax_table.transAxes,
+        rect = plt.Rectangle((0, y_coord - row_height/2.0), 1.08, row_height, transform=ax_table.transAxes,
                              facecolor=COLOR_GAT if bg_alpha > 0 else "none", alpha=bg_alpha, zorder=0)
         ax_table.add_patch(rect)
         

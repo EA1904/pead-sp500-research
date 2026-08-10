@@ -104,7 +104,7 @@ The table below contrasts the baseline against GAT multiplex variants over the O
 
 ### 🎲 GNN Permutation Test: Topology-Driven Alpha
 
-![GNN Permutation Test](assets/gnn_permutation_test.png)
+![GNN Permutation Test](assets/gnn_permutation_test.png?v=4)
 
 A critical finding of this study is that GAT's predictive edge stems entirely from the **economic network topology itself** rather than the trained attention coefficients. 
 
@@ -120,7 +120,7 @@ This confirms the behavioral **investor inattention hypothesis** (Cohen & Frazzi
 
 The GAT Multiplex strategy demonstrates strong resilience under severe transaction cost and execution slippage stress:
 
-![Transaction Cost Sensitivity](assets/friction_sensitivity.png)
+![Transaction Cost Sensitivity](assets/friction_sensitivity.png?v=4)
 
 
 Detailed results and regression tables can be found in the [`results/`](results/) folder.

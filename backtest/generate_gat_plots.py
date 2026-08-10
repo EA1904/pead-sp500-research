@@ -157,11 +157,11 @@ def chart_permutation():
     ax.text(0.58, 2.02, "+0.438\nTopological\nGain", color=ACCENT,
             fontsize=8.5, fontweight="bold", va="center")
 
-    # Small delta
+    # Small delta - place below the connector line to avoid overlap with dot and line
     ax.annotate("", xy=(1.5, 2.259), xytext=(1.5, 2.249),
                 arrowprops=dict(arrowstyle="->", color=BAR_MID2, lw=1.2))
-    ax.text(1.58, 2.253, "+0.010 · p = 0.30, n.s.",
-            color=TEXT_SEC, fontsize=8, va="center")
+    ax.text(1.58, 2.21, "+0.010 · p = 0.30 (n.s.)",
+            color=TEXT_SEC, fontsize=8, ha="left", va="center")
 
     # Insight box
     ax.text(1.0, 1.83, "Alpha is topology-driven, not weight-driven",
@@ -223,9 +223,9 @@ def chart_friction():
                 arrowprops=dict(arrowstyle="->", color=TEXT_SEC, lw=1.0),
                 color=TEXT_SEC, fontsize=8.5, fontweight="bold")
 
-    # End note
-    ax.text(50, 0.95 + 0.07, "Sharpe > 0\nat 50 bps", ha="center",
-            va="bottom", color=TEXT_SEC, fontsize=7.5, style="italic")
+    # End note - draw below the dot to avoid overlapping value label
+    ax.text(50, 0.95 - 0.12, "Sharpe > 0\nat 50 bps", ha="center",
+            va="top", color=TEXT_SEC, fontsize=7.5, style="italic")
 
     ax.set_xlim(-2, 54)
     ax.set_ylim(0.5, 2.65)
