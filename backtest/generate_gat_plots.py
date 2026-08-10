@@ -46,11 +46,11 @@ def apply_theme(fig, ax):
 
 
 def set_title(ax, title, subtitle=None):
-    pad = 28 if subtitle else 12
+    pad = 34 if subtitle else 12
     ax.set_title(title, loc="left", color=TEXT_PRI, fontsize=13,
                  fontweight="bold", pad=pad)
     if subtitle:
-        ax.annotate(subtitle, xy=(0, 1.065), xycoords="axes fraction",
+        ax.annotate(subtitle, xy=(0, 1.09), xycoords="axes fraction",
                     ha="left", va="bottom", color=TEXT_SEC,
                     fontsize=8.2, annotation_clip=False)
 
